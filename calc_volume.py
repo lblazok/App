@@ -21,6 +21,9 @@ def volumen_zasipa(d1, d2, h1, h2):
 i = int(input('Unesi broj profila bušenja/ugradnje = '))
 
 def unos_pod(i):
+    '''
+    Unos podataka u sustav. Nakon izrade UI taj modul unos_pod vise nece biti potreban
+    '''
     SUB = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
 
     d1 = float(input('Unesi fi ' + str(i+1).translate(SUB) +' busenja [m] =  '))
@@ -31,10 +34,15 @@ def unos_pod(i):
     ans = volumen_zasipa(d1, d2, h1, h2)
     
     return ans
-ans = 0
-for x in range(i):
-    ans += unos_pod(x)
-    
-print(ans)
 
-input('Pritisni "Enter" za izlaz')
+def main():
+
+    ans = 0
+    for x in range(i):
+        ans += unos_pod(x)
+    
+    print("Volumen = " + str(ans))
+
+    input('Pritisni "Enter" za izlaz')
+
+main ()
