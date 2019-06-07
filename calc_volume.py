@@ -18,7 +18,7 @@ def volumen_zasipa(d1, d2, h1, h2):
     else:
         return ans_v
     
-i = int(input('Unesi broj profila bušenja/ugradnje = '))
+
 
 def unos_pod(i):
     '''
@@ -36,7 +36,8 @@ def unos_pod(i):
     return ans
 
 def main():
-
+    i = int(input('Unesi broj profila bušenja/ugradnje = '))
+    
     ans = 0
     for x in range(i):
         ans += unos_pod(x)
