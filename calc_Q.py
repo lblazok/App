@@ -17,7 +17,7 @@ def calc_Q(l, fi, n, vm):
     opseg = 2 * r * math.pi
     povrsina = l * opseg
     pov_ulaza = povrsina * n
-    max_kap = float("{0:.2f}".format(pov_ulaza * vm))
+    max_kap = float("{0:.5f}".format(pov_ulaza * vm))
 
     return max_kap
 
@@ -68,7 +68,7 @@ def unos_par():
 def main():
 
     ans = unos_par()
-    opt_ans = float("{0:.4f}".format(ans * 0.7))
+    opt_ans = float("{0:.5f}".format(ans * 0.7))
     print('Maksimalni kapacitet zdenca = ' + str(ans) + ' m^3/s' + ' ---> ' + str(ans*1000) + ' l/s')
     print('Optimani kapacitet zdenca = ' + str(opt_ans) + ' m^3/s'+ ' ---> ' + str(opt_ans*1000) + ' l/s' )
     input('Pritisni Enter za izlaz')
