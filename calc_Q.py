@@ -67,7 +67,7 @@ def unos_par():
 
 def main():
 
-    ans = unos_par()
+    ans = float("{0:.5f}".format(unos_par()))
     opt_ans = float("{0:.5f}".format(ans * 0.7))
     print('Maksimalni kapacitet zdenca = ' + str(ans) + ' m^3/s' + ' ---> ' + str(ans*1000) + ' l/s')
     print('Optimani kapacitet zdenca = ' + str(opt_ans) + ' m^3/s'+ ' ---> ' + str(opt_ans*1000) + ' l/s' )
