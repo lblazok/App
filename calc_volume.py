@@ -26,10 +26,44 @@ def unos_pod(i):
     '''
     SUB = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
 
-    d1 = float(input('Unesi fi ' + str(i+1).translate(SUB) +' busenja [m] =  '))
-    d2 = float(input('Unesi fi '+ str(i+1).translate(SUB) +' ugradnje [m] = '))
-    h1 = float(input('Unesi dubinu '+ str(i+1).translate(SUB) +' busenja [m] = '))
-    h2 = float(input('Unesi dubinu '+ str(i+1).translate(SUB) +' ugradnje [m] = ' ))
+    while True:
+        try:
+            d1 = float(input('Unesi fi ' + str(i+1).translate(SUB) +' busenja [m] =  '))
+        except:
+            print('Unos mora biti broj!!!!')
+            continue
+        else:
+            break
+    
+    while True:
+        try:
+            d2 = float(input('Unesi fi '+ str(i+1).translate(SUB) +' ugradnje [m] = '))
+        except:
+            print('Unos mora biti broj!!!!')
+            continue
+        else:
+            break
+
+    while True:
+        try:
+            h1 = float(input('Unesi dubinu '+ str(i+1).translate(SUB) +' busenja [m] = '))
+        except:
+            print('Unos mora biti broj!!!!')
+            continue
+        else:
+            break
+
+    while True:
+        try:
+            h2 = float(input('Unesi dubinu '+ str(i+1).translate(SUB) +' ugradnje [m] = ' ))
+        except:
+            print('Unos mora biti broj!!!!')
+            continue
+        else:
+            break
+    
+    
+    
 
     ans = volumen_zasipa(d1, d2, h1, h2)
     
