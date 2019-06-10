@@ -36,7 +36,7 @@ def calc_stress(d, vrs, rpvyn, rpv, db, dt):
                         'clay': 22}
 
     z = dt - d
-    zw = rpv - d
+    zw = rpv - z
     res = []
     if rpvyn == 'y':
         if dt < rpv: #provjera da li je materijal iznad rpva
