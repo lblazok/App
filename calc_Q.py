@@ -13,11 +13,11 @@ def calc_Q(l, fi, n, vm):
     '''
     import math
 
-    r = fi/2
-    opseg = 2 * r * math.pi
-    povrsina = l * opseg
-    pov_ulaza = povrsina * n
-    max_kap = float("{0:.5f}".format(pov_ulaza * vm))
+    r = fi/2 #izracun radijusa iz promjera
+    opseg = 2 * r * math.pi # izracun opsega
+    povrsina = l * opseg #izracun povrsine cijevi
+    pov_ulaza = povrsina * n #izracun površine ulaza vode u zdenac (propusnost filtera)
+    max_kap = float("{0:.5f}".format(pov_ulaza * vm)) #maksimalni kapacitet koji moze dati ta duljina filetra
 
     return max_kap
 
@@ -27,7 +27,7 @@ def unos_par():
     '''
     while True:
         try:
-            l = float(input('Unesi duljinu filtera [m]: '))
+            l = float(input('Unesi duljinu filtera [m]: '))  #unos podata s provjerom tocnosti ulaza da se ibjegnu neocekivani errori
         except:
             print('Dubilja filetra mora biti broj!!!!')
             continue
@@ -61,14 +61,14 @@ def unos_par():
         else:
             break
     
-    ans = calc_Q(l, fi, n ,vm)
+    ans = calc_Q(l, fi, n ,vm) # izracun kapaciteta filtera iz unesenih podataka
     return ans
     
 
 def main():
 
     ans = unos_par()
-    opt_ans = float("{0:.5f}".format(ans * 0.7))
+    opt_ans = float("{0:.5f}".format(ans * 0.7)) # optimalni kapacitet zdenca koji je 70% maksimalnog
     print('Maksimalni kapacitet zdenca = ' + str(ans) + ' m^3/s' + ' ---> ' + str(ans*1000) + ' l/s')
     print('Optimani kapacitet zdenca = ' + str(opt_ans) + ' m^3/s'+ ' ---> ' + str(opt_ans*1000) + ' l/s' )
     input('Pritisni Enter za izlaz')
