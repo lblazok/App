@@ -14,6 +14,11 @@ def calc_stress(d, vrs, rpvyn, rpv, db, dt):
 
     Izlaz:  Ukupna naprezanja
             Efektivna naprezanja
+            sigma min
+            sigma max
+            sigma min ef
+            sigma max ef
+            u
 '''
     spec_tezina_suha_min = {'gravel': 15,
                         'sand': 13,
@@ -35,32 +40,29 @@ def calc_stress(d, vrs, rpvyn, rpv, db, dt):
                         'silt': 20,
                         'clay': 22}
 
-    z = dt - d
-    zw = rpv - z
-    res = []
+    z = dt - d #dubina na kojoj racuna naprezanje
+    zw = rpv - z #debljina stupca vode
     if rpvyn == 'y':
         if dt < rpv: #provjera da li je materijal iznad rpva
             sigma_u_min = spec_tezina_suha_min[vrs] * 9.81 * z #izracun ukupnog naprezanja materijala ako je suhi s min tablicnom vrijednosti 
             sigma_u_max = spec_tezina_suha_max[vrs] * 9.81 * z #izracun ukupnog naprezanja materijala ako je suhi s max tablicnom vrijednosti
-            res.append(sigma_u_min)
-            res.append(sigma_u_max)
-            return res
+            
+            return sigma_u_min, sigma_u_max
         else: #provjera da li je materijal ispod rpva
             sigma_u_vl_min = spec_tezina_vlazna_min[vrs] * 9.81 * z #izracun ukupnog naprezanja materijala ako je vlazan s min tablicnom vrijednosti 
             sigma_u_vl_max = spec_tezina_vlazna_max[vrs] * 9.81 * z #izracun ukupnog naprezanja materijala ako je vlazan s max tablicnom vrijednosti 
             u = 1000 * zw # porni tlak na dubini
-            res.append(sigma_u_vl_min)
-            res.append(sigma_u_vl_max)
-            res.append(u)
-            return res
+            sigma_ef_min = sigma_u_vl_min - u
+            sigma_ef_max = sigma_u_max - u
+
+            return sigma_u_min, sigma_u_max, sigma_ef_min, sigma_ef_min, u
     else:
         sigma_u_min = spec_tezina_suha_min[vrs] * 9.81 * z #izracun ukupnog naprezanja materijala ako je suhi s min tablicnom vrijednosti 
         sigma_u_max = spec_tezina_suha_max[vrs] * 9.81 * z #izracun ukupnog naprezanja materijala ako je suhi s max tablicnom vrijednosti
-        res.append(sigma_u_min)
-        res.append(sigma_u_max)
-        return res
+        
+        return sigma_u_min, sigma_u_max
 
-def unos_pod_s():
+def unos_pod_s(rpvyn):
     '''
     Unos podataka za modul calc_stress
     '''
@@ -79,14 +81,7 @@ def unos_pod_s():
         else:
             break
 
-    while True: #unos da li ima podzemne vode
-        try:
-            rpvyn = input('Da li postoji podataka o RPV-u [y/n] = ')
-        except:
-            print('Error - neispravan unos! \nUnesi y/n')
-            continue
-        else:
-            break
+    
     
     while True: #unos RPV-a
         try:
@@ -133,12 +128,42 @@ def unos_pod_s():
                 
             ans_tot_min += calc_stress(d, vrs, rpvyn, rpv, db, dt)[0]
             ans_tot_max += calc_stress(d, vrs, rpvyn, rpv, db, dt)[1]
+            return ans_tot_min, ans_tot_max, dt
         else:
             calc_stress(d, vrs, rpvyn, rpv, db, dt)
             ans_tot_min += calc_stress(d, vrs, rpvyn, rpv, db, dt)[0]
             ans_tot_max += calc_stress(d, vrs, rpvyn, rpv, db, dt)[1]
-            u += calc_stress(d, vrs, rpvyn, rpv, db, dt)[2]
-
+            ans_ef_min += calc_stress(d, vrs, rpvyn, rpv, db, dt)[2]
+            ans_ef_min += calc_stress(d, vrs, rpvyn, rpv, db, dt)[3]
+            u += calc_stress(d, vrs, rpvyn, rpv, db, dt)[4]
+            
+            return ans_tot_min, ans_tot_max, ans_ef_min, ans_ef_max, u, dt
     
           
+def main():
+    while True: #unos da li ima podzemne vode
+        try:
+            rpvyn = input('Da li postoji podataka o RPV-u [y/n] = ')
+        except:
+            print('Error - neispravan unos! \nUnesi y/n')
+            continue
+        else:
+            breakn
+    unos_pod_s(rpvyn)
+    print('=============================================================================')
+    if rpvyn == 'n':
+        print('Ukupno minimalno naprezanje na dubini '+ str(unos_pod_s(rpvyn)[2])+ 'iznosi = '+ str(unos_pod_s(rpvyn)[0]) + '\n')
+        print('Ukupno maksimalno naprezanje na dubini '+ str(unos_pod_s(rpvyn)[2])+ 'iznosi = '+ str(unos_pod_s(rpvyn)[1]) + '\n')
+    
+    else:
+        print('Ukupno minimalno naprezanje na dubini od '+ str(unos_pod_s(rpvyn)[5])+ ' iznosi = '+ str(unos_pod_s(rpvyn)[0]))
+        print('Efektivno minimalno naprezanje na dubini od '+ str(unos_pod_s(rpvyn)[5])+ ' iznosi = '+ str(unos_pod_s(rpvyn)[2]) + '\n')
+        print('Ukupno maksimalno naprezanje na dubini od '+ str(unos_pod_s(rpvyn)[5])+ ' iznosi = '+ str(unos_pod_s(rpvyn)[1]))
+        print('Efektivno maksimalno naprezanje na dubini od '+ str(unos_pod_s(rpvyn)[5])+ ' iznosi = '+ str(unos_pod_s(rpvyn)[3]) + '\n')
+        print('Porni tlak na dubini od '+ str(unos_pod_s(rpvyn)[5])+ ' iznosi = '+ str(unos_pod_s(rpvyn)[4]) + '\n')
+    
+    input('Pritisni Enter za izlaz')
+
+main()
+
     
