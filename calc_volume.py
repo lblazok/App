@@ -8,15 +8,12 @@ def volumen_zasipa(d1, d2, h1, h2):
     h2 = dubina ugradnje [m]
     '''
     import math
-    v1 = math.pi * (d1/2)**2 * h1
-    v2 = math.pi * (d2/2)**2 *h2
+    v1 = math.pi * (d1/2)**2 * h1 #izracun volumena valjka tj busenja
+    v2 = math.pi * (d2/2)**2 *h2 #izracun volumena valjka tj ugradnje
 
-    ans_v = float("{0:.2f}".format(v1 - v2))
+    ans_v = float("{0:.2f}".format(v1 - v2)) #razlika volumena = volumen zasipa
 
-    if ans_v < 0:
-        return "Error - provjeri unesene podatke"
-    else:
-        return ans_v
+    return ans_v
     
 
 
@@ -26,7 +23,7 @@ def unos_pod(i):
     '''
     SUB = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
 
-    while True:
+    while True: # Unos podataka s provjerom tocnosti formata unosa
         try:
             d1 = float(input('Unesi fi ' + str(i+1).translate(SUB) +' busenja [m] =  '))
         except:
@@ -76,7 +73,10 @@ def main():
     for x in range(i):
         ans += unos_pod(x)
     
-    print("Volumen = " + str(ans))
+    if ans < 0:
+        print('Error - volumen ne moze biti negativan. \nProvjeri unesene podatke!')
+    else:
+        print("Volumen = " + str(ans))
 
     input('Pritisni "Enter" za izlaz')
 
