@@ -102,6 +102,7 @@ def unos_pod_s(rpvyn, i):
         else:
             break
     dt = 0
+    c=[]
     for x in range(i):
         while True: #unos debljine sloja
             try:
@@ -125,12 +126,13 @@ def unos_pod_s(rpvyn, i):
         dt += d
         dt_a = [0]
         dt_a.append(dt)
+    
         if rpvyn == 'n':
             rpv = db
             
             ans_tot_min += calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
             ans_tot_max += calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
-            
+            c.append(ans_tot_min)
         else:
             
             
@@ -138,10 +140,11 @@ def unos_pod_s(rpvyn, i):
             ans_tot_max += calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
             
             u = 9.81 * (db-rpv)
+            c.append(ans_tot_min)
     if rpvyn == 'n':
-        return ans_tot_min, ans_tot_max, dt 
+        return ans_tot_min, ans_tot_max, dt, c
     else:     
-        return ans_tot_min, ans_tot_max, u, dt
+        return ans_tot_min, ans_tot_max, u, dt, c
     
           
 def main():
@@ -168,6 +171,7 @@ def main():
         print('Ukupno minimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0]) + ' kN/m^2 \n')))
         print('Ukupno maksimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1] + ' kN/m^2'))))
         
+        print('\nc = '+ str(res[3]))
 
     else:
         print('Ukupno minimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0])+ ' kN/m^2')))
@@ -175,12 +179,13 @@ def main():
         print('Ukupno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1])+ ' kN/m^2')))
         print('Efektivno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1] - res[2]) + ' kN/m^2 \n')))
         print('Porni tlak na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[2]) + ' kN/m^2 \n')))
+        
+        print('\nc = '+ str(res[4]))
     
     print('=============================================================================')
     
     
 
 main()
-
 
     
