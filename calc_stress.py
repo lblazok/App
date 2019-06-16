@@ -49,9 +49,11 @@ def calc_stress(d, vrs, rpvyn, rpv, db, dt):
     elif dt[-1] > rpv and dt[-2] < rpv: # prelazni slucaj
         d_s = rpv - dt[-2]
         d_v = dt[-1] - rpv
-        a_min = stress_n(d_s, vrs)[0] + stress_y(d_v, vrs)[0]
-        a_max = stress_n(d_s, vrs)[1] + stress_y(d_v, vrs)[1]
-        return a_min, a_max
+        #if d_s + d_v == d:
+        #a_min = stress_n(d_s, vrs)[0] + stress_y(d_v, vrs)[0]
+        #a_max = stress_n(d_s, vrs)[1] + stress_y(d_v, vrs)[1]
+        return stress_yn(d_s, d_v, vrs)
+        
     else:                   # vlazni materijal
         return stress_y(d, vrs)
         
@@ -72,6 +74,14 @@ def stress_y(d, vrs):
 
     return s_v_min, s_v_max
 
+def stress_yn(d_s, d_v, vrs):
+    ''' prelazni slucaj'''
+
+    min = (d_s * spec_tezina_suha_min[vrs]) + (d_v * spec_tezina_vlazna_min[vrs])
+    max = (d_s * spec_tezina_suha_max[vrs]) + (d_v * spec_tezina_vlazna_max[vrs])
+
+    return min, max
+
 def unos_pod_s(rpvyn, i):
     '''
     Unos podataka za modul calc_stress
@@ -79,7 +89,7 @@ def unos_pod_s(rpvyn, i):
     
     ans_tot_min = 0
     ans_tot_max = 0
-    
+    dt_a = [0] 
     
 
     
@@ -124,23 +134,30 @@ def unos_pod_s(rpvyn, i):
                 break
             
         dt += d
-        dt_a = [0]
+    
         dt_a.append(dt)
     
         if rpvyn == 'n':
             rpv = db
             
-            ans_tot_min += calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
-            ans_tot_max += calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
-            c.append(ans_tot_min)
+            ans_tot_min = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
+            ans_tot_max = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
+            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
+            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1])
         else:
             
             
-            ans_tot_min += calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
-            ans_tot_max += calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
+            #ans_tot_min = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
+            #ans_tot_max = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
             
             u = 9.81 * (db-rpv)
-            c.append(ans_tot_min)
+            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
+            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1])
+
+    for x in range(0, len(c),2):
+        ans_tot_min += c[x]  
+    for x in range(1, len(c), 2):
+        ans_tot_max += c[x]     
     if rpvyn == 'n':
         return ans_tot_min, ans_tot_max, dt, c
     else:     
@@ -168,8 +185,8 @@ def main():
     res = unos_pod_s(rpvyn,i)
     print('=============================================================================')
     if rpvyn == 'n':
-        print('Ukupno minimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0]) + ' kN/m^2 \n')))
-        print('Ukupno maksimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1] + ' kN/m^2'))))
+        print('Ukupno minimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0])) + ' kN/m^2 \n'))
+        print('Ukupno maksimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1])) + ' kN/m^2'))
         
         print('\nc = '+ str(res[3]))
 
@@ -180,8 +197,7 @@ def main():
         print('Efektivno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1] - res[2]) + ' kN/m^2 \n')))
         print('Porni tlak na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[2]) + ' kN/m^2 \n')))
         
-        print('\nc = '+ str(res[4]))
-    
+            
     print('=============================================================================')
     
     
