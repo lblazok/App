@@ -16,7 +16,7 @@ def calc_Q(l, fi, n, vm):
     r = fi/2 #izracun radijusa iz promjera
     opseg = 2 * r * math.pi # izracun opsega
     povrsina = l * opseg #izracun povrsine cijevi
-    pov_ulaza = povrsina * n #izracun površine ulaza vode u zdenac (propusnost filtera)
+    pov_ulaza = povrsina * n #izracun povrsine ulaza vode u zdenac (propusnost filtera)
     max_kap = float("{0:.5f}".format(pov_ulaza * vm)) #maksimalni kapacitet koji moze dati ta duljina filetra
 
     return max_kap

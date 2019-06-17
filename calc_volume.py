@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 def volumen_zasipa(d1, d2, h1, h2):
     '''
     Izracun potrebnog volumena zasipa
@@ -21,7 +22,9 @@ def unos_pod(i):
     '''
     Unos podataka u sustav. Nakon izrade UI taj modul unos_pod vise nece biti potreban
     '''
-    SUB = str.maketrans("0123456789", "₀₁₂₃₄₅₆₇₈₉")
+    in1 = "0123456789"
+    out1 = "₀₁₂₃₄₅₆₇₈₉"
+    SUB = str.maketrans(in1, out1)
 
     while True: # Unos podataka s provjerom tocnosti formata unosa
         try:
