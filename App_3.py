@@ -12,7 +12,7 @@ def call(i):
         import calc_volume
     elif i == 2:
         import calc_Q
-    else:
+    elif i == 3:
         import calc_stress
 
 def izbornik():
