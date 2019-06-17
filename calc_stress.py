@@ -188,7 +188,7 @@ def main():
         print('Ukupno minimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0])) + ' kN/m^2 \n'))
         print('Ukupno maksimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1])) + ' kN/m^2'))
         
-        print('\nc = '+ str(res[3]))
+        
 
     else:
         print('Ukupno minimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0])+ ' kN/m^2')))
