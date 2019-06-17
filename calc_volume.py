@@ -1,10 +1,10 @@
 def volumen_zasipa(d1, d2, h1, h2):
     '''
     Izracun potrebnog volumena zasipa
-    ulazni podaci: fi bušenja i fi ugradnje, dubina bušenja i dubina ugradnje
-    d1 = fi bušenja [m]
+    ulazni podaci: fi busenja i fi ugradnje, dubina busenja i dubina ugradnje
+    d1 = fi busenja [m]
     d2 = fi ugradnje [m]
-    h1 = dubina bušenja [m]
+    h1 = dubina busenja [m]
     h2 = dubina ugradnje [m]
     '''
     import math
@@ -67,7 +67,7 @@ def unos_pod(i):
     return ans
 
 def main():
-    i = int(input('Unesi broj profila bušenja/ugradnje = '))
+    i = int(input('Unesi broj profila busenja/ugradnje = '))
     
     ans = 0
     for x in range(i):

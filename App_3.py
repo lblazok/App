@@ -22,9 +22,9 @@ def izbornik():
         while True:
                 try:
                     i = int(input('''
-Za izračunavanje volumena zasipa upiši 1\n
-Za izračunavanje kapaciteta zdenca upiši 2\n
-Za izračunavanje naprezanja upiši 3 
+Za izracunavanje volumena zasipa upisi 1\n
+Za izracunavanje kapaciteta zdenca upisi 2\n
+Za izracunavanje naprezanja upisi 3 
 Unos: '''))
                 except:
                     print('Unos mora biti broj!')
@@ -35,8 +35,8 @@ Unos: '''))
         while True:
             try:
                 a = str(input('''
-Za povratak na izbornik upiši y \n
-Za izlaz iz programa upiši n
+Za povratak na izbornik upisi y \n
+Za izlaz iz programa upisi n
 Unos: ''' ))
             except:
                 print('Unos mora biti y ili n')
