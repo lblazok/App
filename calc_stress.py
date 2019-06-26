@@ -97,7 +97,7 @@ def unos_pod_s(rpvyn, i):
     c_num_min = np.array([0])
     c_num_max = np.array([0])
     u_num = np.array([0])
-    u_d_num = np.array(rpv)
+    
     c_ef_num_min = np.array([0])
     c_ef_num_max = np.array([0])
 
@@ -145,13 +145,13 @@ def unos_pod_s(rpvyn, i):
                 break
             
         dt += d
-    
+        
         dt_a.append(dt)
         dt_num = np.append(dt_num, dt)
     
         if rpvyn == 'n':
             rpv = db
-            
+            u_d_num = np.array(rpv)
             ans_tot_min = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
             ans_tot_max = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
@@ -163,17 +163,20 @@ def unos_pod_s(rpvyn, i):
             
             #ans_tot_min = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
             #ans_tot_max = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
-            
+            u_d_num = np.array(rpv)
             u = 9.81 * (db-rpv)
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1])
             c_num_min = np.append(c_num_min, c_num_min[-1] + c[-2])
             c_num_max = np.append(c_num_max, c_num_max[-1] + c[-1])
-            u_d_num = np.append
-            if rpv < dt:
-                c_ef_num_min = np.append(c_ef_num_min, c_ef_num_min[-1] + (c[-2]-9.81*(dt-rpv)))
-                c_ef_num_max = np.array(c_ef_num_max, c_ef_num_max[-1] + (c[-1] - 9.81* (dt-rpv)))
-
+            u_d_num = np.append(u_d_num, db)
+            
+            
+    if rpvyn == 'y':
+        u_num = np.append(u_num, u)
+        if rpv < dt:
+                c_ef_num_min = np.append(c_ef_num_min, c_num_min[-1] - u)
+                c_ef_num_max = np.append(c_ef_num_max, c_num_max[-1] - u)
     for x in range(0, len(c),2):
         ans_tot_min += c[x]
         
@@ -196,7 +199,7 @@ def graf1(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5):
     5 : ef max
     '''
     
-    plt.style.use('fivethirtyeight') 
+    plt.style.use('ggplot') 
     plt.plot(x1, y1, label='Ukupno minimalno naprezanje')
     plt.plot(x2, y2, label='Ukupno maksimalno naprezanje')
     plt.plot(x3, y3, label='Porni tlak')
@@ -208,7 +211,7 @@ def graf1(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5):
     plt.ylabel('Dubina [m]')
     plt.title('Naprezanja')
     plt.legend()
-    plt.show
+    plt.show()
 
 def graf2(x1, y1, x2, y2):
 
@@ -254,12 +257,13 @@ def main():
         
 
     else:
-        print('Ukupno minimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0])+ ' kN/m^2')))
-        print('Efektivno minimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0] - res[2]) + ' kN/m^2 \n')))
-        print('Ukupno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1])+ ' kN/m^2')))
-        print('Efektivno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1] - res[2]) + ' kN/m^2 \n')))
-        print('Porni tlak na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[2]) + ' kN/m^2 \n')))
-        graf1()
+        print('Ukupno minimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[5][-1])+ ' kN/m^2')))
+        print('Efektivno minimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[8][-1]) + ' kN/m^2 \n')))
+        print('Ukupno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[6][-1])+ ' kN/m^2')))
+        print('Efektivno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[9][-1]) + ' kN/m^2 \n')))
+        print('Porni tlak na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[10][-1]) + ' kN/m^2 \n')))
+        
+        graf1(res[5], res[7], res[6], res[7], res[10], res[11], res[8], res[11], res[9], res[11])
             
     print('=============================================================================')
     
