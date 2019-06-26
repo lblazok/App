@@ -18,6 +18,9 @@ spec_tezina_vlazna_max = {'gravel': 22,
                         'silt': 20,
                         'clay': 22}
 
+import numpy as np
+import matplotlib.pyplot as plt 
+
 def calc_stress(d, vrs, rpvyn, rpv, db, dt):
     '''
     Izracunavanje naprezanja na odredenoj dubini.
@@ -90,6 +93,14 @@ def unos_pod_s(rpvyn, i):
     ans_tot_min = 0
     ans_tot_max = 0
     dt_a = [0] 
+    dt_num = np.array([0])
+    c_num_min = np.array([0])
+    c_num_max = np.array([0])
+    u_num = np.array([0])
+    u_d_num = np.array(rpv)
+    c_ef_num_min = np.array([0])
+    c_ef_num_max = np.array([0])
+
     
 
     
@@ -136,6 +147,7 @@ def unos_pod_s(rpvyn, i):
         dt += d
     
         dt_a.append(dt)
+        dt_num = np.append(dt_num, dt)
     
         if rpvyn == 'n':
             rpv = db
@@ -144,6 +156,8 @@ def unos_pod_s(rpvyn, i):
             ans_tot_max = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1])
+            c_num_min = np.append(c_num_min, c_num_min[-1] + c[-2])
+            c_num_max = np.append(c_num_max, c_num_max[-1] + c[-1])  
         else:
             
             
@@ -153,17 +167,65 @@ def unos_pod_s(rpvyn, i):
             u = 9.81 * (db-rpv)
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1])
+            c_num_min = np.append(c_num_min, c_num_min[-1] + c[-2])
+            c_num_max = np.append(c_num_max, c_num_max[-1] + c[-1])
+            u_d_num = np.append
+            if rpv < dt:
+                c_ef_num_min = np.append(c_ef_num_min, c_ef_num_min[-1] + (c[-2]-9.81*(dt-rpv)))
+                c_ef_num_max = np.array(c_ef_num_max, c_ef_num_max[-1] + (c[-1] - 9.81* (dt-rpv)))
 
     for x in range(0, len(c),2):
-        ans_tot_min += c[x]  
+        ans_tot_min += c[x]
+        
     for x in range(1, len(c), 2):
-        ans_tot_max += c[x]     
+        ans_tot_max += c[x] 
+            
     if rpvyn == 'n':
-        return ans_tot_min, ans_tot_max, dt, c
+        return ans_tot_min, ans_tot_max, dt, c, c_num_min, c_num_max, dt_num
     else:     
-        return ans_tot_min, ans_tot_max, u, dt, c
+        return ans_tot_min, ans_tot_max, u, dt, c, c_num_min, c_num_max, dt_num, c_ef_num_min, c_ef_num_max, u_num, u_d_num
     
-          
+def graf1(x1, y1, x2, y2, x3, y3, x4, y4, x5, y5):
+    '''
+    Crtanje grafova naprezanja
+    Ulaz su array s podacima o dubini i vrijednostima naprezanja
+    1 : min
+    2 : max
+    3 : u
+    4 : ef min
+    5 : ef max
+    '''
+    
+    plt.style.use('fivethirtyeight') 
+    plt.plot(x1, y1, label='Ukupno minimalno naprezanje')
+    plt.plot(x2, y2, label='Ukupno maksimalno naprezanje')
+    plt.plot(x3, y3, label='Porni tlak')
+    plt.plot(x4, y4, label='Efektivno minimalno naprezanje')
+    plt.plot(x5, y5, label='Efektivno maksimalno naprezanje')
+
+    plt.gca().invert_yaxis()
+    plt.xlabel('Naprezanja [kN/m^2]')
+    plt.ylabel('Dubina [m]')
+    plt.title('Naprezanja')
+    plt.legend()
+    plt.show
+
+def graf2(x1, y1, x2, y2):
+
+    plt.style.use('ggplot') 
+    plt.plot(x1, y1, label='Ukupno minimalno naprezanje')
+    plt.plot(x2, y2, label='Ukupno maksimalno naprezanje')
+    plt.gca().invert_yaxis()
+
+    plt.xlabel('Naprezanja [kN/m^2]')
+    plt.ylabel('Dubina [m]')
+
+    plt.legend()
+    plt.title('Naprezanja')
+    plt.show()
+
+
+
 def main():
     while True: #unos da li ima podzemne vode
         try:
@@ -185,9 +247,10 @@ def main():
     res = unos_pod_s(rpvyn,i)
     print('=============================================================================')
     if rpvyn == 'n':
-        print('Ukupno minimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[0])) + ' kN/m^2 \n'))
-        print('Ukupno maksimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1])) + ' kN/m^2'))
+        print('Ukupno minimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[4][-1])) + ' kN/m^2 \n'))
+        print('Ukupno maksimalno naprezanje na dubini '+ str(res[2])+ ' m iznosi = '+ str(("{0:.2f}".format(res[5][-1])) + ' kN/m^2'))
         
+        graf2(res[4], res[6], res[5], res[6])
         
 
     else:
@@ -196,7 +259,7 @@ def main():
         print('Ukupno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1])+ ' kN/m^2')))
         print('Efektivno maksimalno naprezanje na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[1] - res[2]) + ' kN/m^2 \n')))
         print('Porni tlak na dubini od '+ str(res[3])+ ' m iznosi = '+ str(("{0:.2f}".format(res[2]) + ' kN/m^2 \n')))
-        
+        graf1()
             
     print('=============================================================================')
     
