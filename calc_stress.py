@@ -49,12 +49,10 @@ def calc_stress(d, vrs, rpvyn, rpv, db, dt):
     
     if rpvyn == 'n': #Slucaj dok nema rpva
         return stress_n(d, vrs)
-    elif dt[-1] > rpv and dt[-2] < rpv: # prelazni slucaj
+    elif dt_a[-1] > rpv and dt_a[-2] < rpv: # prelazni slucaj
         d_s = rpv - dt[-2]
         d_v = dt[-1] - rpv
-        #if d_s + d_v == d:
-        #a_min = stress_n(d_s, vrs)[0] + stress_y(d_v, vrs)[0]
-        #a_max = stress_n(d_s, vrs)[1] + stress_y(d_v, vrs)[1]
+        
         return stress_yn(d_s, d_v, vrs)
         
     else:                   # vlazni materijal
@@ -152,17 +150,13 @@ def unos_pod_s(rpvyn, i):
         if rpvyn == 'n':
             rpv = db
             u_d_num = np.array(rpv)
-            ans_tot_min = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
-            ans_tot_max = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
+            
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1])
             c_num_min = np.append(c_num_min, c_num_min[-1] + c[-2])
             c_num_max = np.append(c_num_max, c_num_max[-1] + c[-1])  
         else:
-            
-            
-            #ans_tot_min = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0]
-            #ans_tot_max = calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1]
+
             u_d_num = np.array(rpv)
             u = 9.81 * (db-rpv)
             c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
@@ -174,7 +168,8 @@ def unos_pod_s(rpvyn, i):
             
     if rpvyn == 'y':
         u_num = np.append(u_num, u)
-        if rpv < dt:
+        
+        if dt[-1] > rpv and dt[-2] < rpv:
                 c_ef_num_min = np.append(c_ef_num_min, c_num_min[-1] - u)
                 c_ef_num_max = np.append(c_ef_num_max, c_num_max[-1] - u)
     for x in range(0, len(c),2):
