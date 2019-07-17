@@ -21,7 +21,7 @@ spec_tezina_vlazna_max = {'gravel': 22,
 import numpy as np
 import matplotlib.pyplot as plt 
 
-def calc_stress(d, vrs, rpvyn, rpv, db, dt):
+def calc_stress(d, vrs, rpvyn, rpv, db, dt, dt_a):
     '''
     Izracunavanje naprezanja na odredenoj dubini.
     Pretpostavka je da su hotizontalna = vertikanim naprezanjima
@@ -50,8 +50,8 @@ def calc_stress(d, vrs, rpvyn, rpv, db, dt):
     if rpvyn == 'n': #Slucaj dok nema rpva
         return stress_n(d, vrs)
     elif dt_a[-1] > rpv and dt_a[-2] < rpv: # prelazni slucaj
-        d_s = rpv - dt[-2]
-        d_v = dt[-1] - rpv
+        d_s = rpv - dt_a[-2]
+        d_v = dt_a[-1] - rpv
         
         return stress_yn(d_s, d_v, vrs)
         
@@ -151,16 +151,16 @@ def unos_pod_s(rpvyn, i):
             rpv = db
             u_d_num = np.array(rpv)
             
-            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
-            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1])
+            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt, dt_a)[0])
+            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt, dt_a)[1])
             c_num_min = np.append(c_num_min, c_num_min[-1] + c[-2])
             c_num_max = np.append(c_num_max, c_num_max[-1] + c[-1])  
         else:
 
             u_d_num = np.array(rpv)
             u = 9.81 * (db-rpv)
-            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[0])
-            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt_a)[1])
+            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt, dt_a)[0])
+            c.append(calc_stress(d, vrs, rpvyn, rpv, db, dt, dt_a)[1])
             c_num_min = np.append(c_num_min, c_num_min[-1] + c[-2])
             c_num_max = np.append(c_num_max, c_num_max[-1] + c[-1])
             u_d_num = np.append(u_d_num, db)
@@ -169,7 +169,7 @@ def unos_pod_s(rpvyn, i):
     if rpvyn == 'y':
         u_num = np.append(u_num, u)
         
-        if dt[-1] > rpv and dt[-2] < rpv:
+        if dt_a[-1] > rpv and dt_a[-2] < rpv:
                 c_ef_num_min = np.append(c_ef_num_min, c_num_min[-1] - u)
                 c_ef_num_max = np.append(c_ef_num_max, c_num_max[-1] - u)
     for x in range(0, len(c),2):
