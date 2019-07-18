@@ -18,7 +18,7 @@ class mywindow(QtWidgets.QMainWindow):
     
         self.ui.setupUi(self)
         self.ui.Q_gumb.clicked.connect(self.izracun_q) #klik na gumb racun na tabu Q vode
-        self.ui.vol_novi_profil.clicked.connect(self.novi_red) #dodavanje novog reda u tablici za izracun volumena na klik gumba
+        self.ui.vol_novi_profil.clicked.connect(self.novi_stupac) #dodavanje novog stupca u tablici za izracun volumena na klik gumba
         self.ui.vol_racun_gumb.clicked.connect(self.racun_vol) #izracun volumena na klik
 
     def izracun_q(self): #izracun kolicine vode 
@@ -35,18 +35,18 @@ class mywindow(QtWidgets.QMainWindow):
         )   
         self.ui.Izlaz.setText(res)  #dodavanje ispisa polju za rezultate
 
-    def novi_red(self): # funkcija za dodavanje novog reda tablici
-        rowPosition = self.ui.tablica_volumen.rowCount()
-        self.ui.tablica_volumen.insertRow(rowPosition) 
+    def novi_stupac(self): # funkcija za dodavanje novog stupca tablici
+        columnPosition = self.ui.tablica_volumen.columnCount()
+        self.ui.tablica_volumen.insertColumn(columnPosition) 
 
     def racun_vol(self): #funkcija za racunanje volumena
         ans = 0
-        i = self.ui.tablica_volumen.rowCount()
+        i = self.ui.tablica_volumen.columnCount()
         res = []
         for row in range(i):
             array = []
             for col in range(4):
-                array.append(float(self.ui.tablica_volumen.item(row,col).text()))
+                array.append(float(self.ui.tablica_volumen.item(col,row).text()))
             
             res.append(volumen_zasipa(array[0], array[2], array[1], array[3]))
         
@@ -54,7 +54,9 @@ class mywindow(QtWidgets.QMainWindow):
             ans += res[i]
         
         ans_str = "Volumen = " + str(ans) + " m^3"
-        self.ui.vol_izlaz.setText(ans_str)
+        self.ui.vol_izlaz.setText(ans_str) #Ispis rezultata
+
+
 
 app = QtWidgets.QApplication([])
  

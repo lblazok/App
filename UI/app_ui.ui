@@ -210,10 +210,10 @@
             <bool>true</bool>
            </property>
            <property name="rowCount">
-            <number>1</number>
+            <number>4</number>
            </property>
            <property name="columnCount">
-            <number>4</number>
+            <number>1</number>
            </property>
            <attribute name="horizontalHeaderCascadingSectionResizes">
             <bool>false</bool>
@@ -227,42 +227,27 @@
            <attribute name="horizontalHeaderStretchLastSection">
             <bool>false</bool>
            </attribute>
-           <row/>
-           <column>
+           <row>
             <property name="text">
              <string>Ø bušenja</string>
             </property>
-           </column>
-           <column>
+           </row>
+           <row>
             <property name="text">
              <string>Dubina bušenja</string>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-           </column>
-           <column>
+           </row>
+           <row>
             <property name="text">
              <string>Ø ugradnje</string>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-           </column>
-           <column>
+           </row>
+           <row>
             <property name="text">
              <string>Dubina ugradnje</string>
             </property>
-            <property name="font">
-             <font>
-              <pointsize>8</pointsize>
-             </font>
-            </property>
-           </column>
+           </row>
+           <column/>
           </widget>
           <widget class="QPushButton" name="vol_novi_profil">
            <property name="geometry">
