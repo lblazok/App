@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Program</class>
+ <widget class="QMainWindow" name="Program">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1105</width>
+    <height>776</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <item>
+     <widget class="QFrame" name="Pocetni_frame">
+      <property name="frameShape">
+       <enum>QFrame::StyledPanel</enum>
+      </property>
+      <property name="frameShadow">
+       <enum>QFrame::Raised</enum>
+      </property>
+      <layout class="QGridLayout" name="gridLayout">
+       <item row="0" column="1">
+        <widget class="QTabWidget" name="Moduli">
+         <property name="tabPosition">
+          <enum>QTabWidget::North</enum>
+         </property>
+         <property name="currentIndex">
+          <number>1</number>
+         </property>
+         <widget class="QWidget" name="tab">
+          <attribute name="title">
+           <string>Izračun količine crpljenja</string>
+          </attribute>
+          <widget class="QPushButton" name="Q_gumb">
+           <property name="geometry">
+            <rect>
+             <x>710</x>
+             <y>240</y>
+             <width>141</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Izračun</string>
+           </property>
+           <property name="checkable">
+            <bool>false</bool>
+           </property>
+           <property name="default">
+            <bool>false</bool>
+           </property>
+           <property name="flat">
+            <bool>false</bool>
+           </property>
+          </widget>
+          <widget class="QTextBrowser" name="Izlaz">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>370</y>
+             <width>541</width>
+             <height>111</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QWidget" name="layoutWidget">
+           <property name="geometry">
+            <rect>
+             <x>286</x>
+             <y>150</y>
+             <width>366</width>
+             <height>156</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_5">
+              <item>
+               <widget class="QLabel" name="label">
+                <property name="text">
+                 <string>Duljina filtra [m]</string>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignRight">
+               <widget class="QLineEdit" name="u_l">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unesi duljinu filtra u metrima (npr. 10)&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_4">
+              <item>
+               <widget class="QLabel" name="label_2">
+                <property name="text">
+                 <string>Promjer filtra [m]</string>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignRight">
+               <widget class="QLineEdit" name="u_fi">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unesi promjer filtra u metrima (npr. 0.125) KORISTI DECIMALNU TOČKU!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_3">
+              <item>
+               <widget class="QLabel" name="label_3">
+                <property name="text">
+                 <string>Propusnost filtra [%]</string>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignRight">
+               <widget class="QLineEdit" name="u_n">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unesi propusnost filtra (npr. 0.25) KORISTI DECIMALNU TOČKU!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout">
+              <item>
+               <widget class="QLabel" name="label_4">
+                <property name="text">
+                 <string>Maks. ulazna brzina (0,01 - 0,06 m/s)</string>
+                </property>
+               </widget>
+              </item>
+              <item alignment="Qt::AlignRight">
+               <widget class="QLineEdit" name="u_vm">
+                <property name="toolTip">
+                 <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unesi maksimalnu ulaznu brzinu u m/s (npr. 0.03) KORISTI DECIMALNU TOČKU!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+                </property>
+                <property name="inputMethodHints">
+                 <set>Qt::ImhPreferNumbers</set>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+           </layout>
+          </widget>
+          <widget class="QLabel" name="label_5">
+           <property name="geometry">
+            <rect>
+             <x>290</x>
+             <y>350</y>
+             <width>58</width>
+             <height>18</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Rezultat:</string>
+           </property>
+          </widget>
+         </widget>
+         <widget class="QWidget" name="tab_2">
+          <attribute name="title">
+           <string>Izračun volumena</string>
+          </attribute>
+          <widget class="QTableWidget" name="tablica_volumen">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>50</y>
+             <width>421</width>
+             <height>171</height>
+            </rect>
+           </property>
+           <property name="toolTip">
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Unesi podatke o bušenju i ugradnji u metrima.&lt;/p&gt;&lt;p&gt;KORISTI DECIMALNU TOČKU!&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           </property>
+           <property name="inputMethodHints">
+            <set>Qt::ImhPreferNumbers</set>
+           </property>
+           <property name="tabKeyNavigation">
+            <bool>true</bool>
+           </property>
+           <property name="alternatingRowColors">
+            <bool>true</bool>
+           </property>
+           <property name="showGrid">
+            <bool>true</bool>
+           </property>
+           <property name="gridStyle">
+            <enum>Qt::SolidLine</enum>
+           </property>
+           <property name="sortingEnabled">
+            <bool>false</bool>
+           </property>
+           <property name="wordWrap">
+            <bool>true</bool>
+           </property>
+           <property name="cornerButtonEnabled">
+            <bool>true</bool>
+           </property>
+           <property name="rowCount">
+            <number>1</number>
+           </property>
+           <property name="columnCount">
+            <number>4</number>
+           </property>
+           <attribute name="horizontalHeaderCascadingSectionResizes">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderHighlightSections">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderShowSortIndicator" stdset="0">
+            <bool>false</bool>
+           </attribute>
+           <attribute name="horizontalHeaderStretchLastSection">
+            <bool>false</bool>
+           </attribute>
+           <row/>
+           <column>
+            <property name="text">
+             <string>Ø bušenja</string>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Dubina bušenja</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Ø ugradnje</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+           </column>
+           <column>
+            <property name="text">
+             <string>Dubina ugradnje</string>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>8</pointsize>
+             </font>
+            </property>
+           </column>
+          </widget>
+          <widget class="QPushButton" name="vol_novi_profil">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>240</y>
+             <width>151</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Dodaj novi profil</string>
+           </property>
+          </widget>
+          <widget class="QPushButton" name="vol_racun_gumb">
+           <property name="geometry">
+            <rect>
+             <x>200</x>
+             <y>240</y>
+             <width>151</width>
+             <height>51</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Izračun</string>
+           </property>
+          </widget>
+          <widget class="QTextBrowser" name="vol_izlaz">
+           <property name="geometry">
+            <rect>
+             <x>20</x>
+             <y>410</y>
+             <width>411</width>
+             <height>251</height>
+            </rect>
+           </property>
+          </widget>
+          <widget class="QLabel" name="label_11">
+           <property name="geometry">
+            <rect>
+             <x>30</x>
+             <y>380</y>
+             <width>58</width>
+             <height>18</height>
+            </rect>
+           </property>
+           <property name="text">
+            <string>Rezultat:</string>
+           </property>
+          </widget>
+          <widget class="QGraphicsView" name="graf_vol">
+           <property name="geometry">
+            <rect>
+             <x>600</x>
+             <y>50</y>
+             <width>461</width>
+             <height>611</height>
+            </rect>
+           </property>
+          </widget>
+         </widget>
+        </widget>
+       </item>
+      </layout>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1105</width>
+     <height>30</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuIzra_un_parametara_zdenca">
+    <property name="title">
+     <string>Fi&amp;le</string>
+    </property>
+    <addaction name="separator"/>
+    <addaction name="actionSave"/>
+    <addaction name="actionSave_as"/>
+    <addaction name="actionOpen"/>
+    <addaction name="actionClose"/>
+   </widget>
+   <addaction name="menuIzra_un_parametara_zdenca"/>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionSave">
+   <property name="text">
+    <string>&amp;Save</string>
+   </property>
+  </action>
+  <action name="actionSave_as">
+   <property name="text">
+    <string>Sa&amp;ve as</string>
+   </property>
+  </action>
+  <action name="actionOpen">
+   <property name="text">
+    <string>&amp;Open</string>
+   </property>
+  </action>
+  <action name="actionClose">
+   <property name="text">
+    <string>&amp;Close</string>
+   </property>
+  </action>
+ </widget>
+ <tabstops>
+  <tabstop>u_l</tabstop>
+  <tabstop>u_fi</tabstop>
+  <tabstop>u_n</tabstop>
+  <tabstop>u_vm</tabstop>
+  <tabstop>Q_gumb</tabstop>
+  <tabstop>Izlaz</tabstop>
+ </tabstops>
+ <resources/>
+ <connections/>
+</ui>
