@@ -31,7 +31,7 @@ class mywindow(QtWidgets.QMainWindow):
         ans = calc_Q(l, fi, n, vm)
         res = ( #ispis
             'Maksimalni kapacitet zdenca = ' + str(ans) + ' m^3/s' + ' ---> ' + str(ans*1000) + ' l/s''\n'
-            'Optimani kapacitet zdenca = ' + str(ans * 0.7) + ' m^3/s'+ ' ---> ' + str(ans * 0.7 *1000) + ' l/s'
+            'Optimani kapacitet zdenca (70% maks. kapaciteta) = ' + str(ans * 0.7) + ' m^3/s'+ ' ---> ' + str(ans * 0.7 *1000) + ' l/s'
         )   
         self.ui.Izlaz.setText(res)  #dodavanje ispisa polju za rezultate
 
